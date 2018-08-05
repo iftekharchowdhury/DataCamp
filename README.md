@@ -16,4 +16,31 @@ You can also use the IPython Shell interactively by simply typing commands and h
 <li>Add another line of code to the Python script: print(7 + 10).</li>
 <li>Hit Submit Answer to execute the Python script and receive feedback.</li>
 
+<h2>Any Comments</h2>
+Something that Filip didn't mention in his videos is that you can add comments to your Python scripts. Comments are important to make sure that you and others can understand what your code is about.
+To add comments to your Python script, you can use the # tag. These comments are not run as Python code, so they will not influence your result. As an example, take the comment on the right, # Division; it is completely ignored during execution.
+
+## Python As A Calculator
+
+Python is perfectly suited to do basic calculations. Apart from addition, subtraction, multiplication and division, there is also support for more advanced operations such as:
+<li>Exponentiation: **. This operator raises the number to its left to the power of the number to its right. For example 4**2 will give 16.</li>
+
+<li>Modulo: %. This operator returns the remainder of the division of the number to the left by the number on its right. For example 18 % 7 equals 4.</li>
+<li>The code in the script on the right gives some examples.</li>
+
+## Suppose you have $100, which you can invest with a 10% return each year. After one year, 
+## it's 100×1.1=110
+## 100×1.1=110
+## dollars, and after two years it's 
+## 100×1.1×1.1=121
+## 100×1.1×1.1=121
+## . Add code on the right to calculate how much money you end up with after 7 years.
+
+## Variable Assignment
+## <li>In Python, a variable allows you to refer to a value with a name. To create a variable use =, like this example:</li>
+## <li>x = 5</li>
+## <li>You can now use the name of this variable, x, instead of the actual value, 5.</li>
+## <li>Remember, = in Python means assignment, it doesn't test equality!</li>
+
+
 </p>
