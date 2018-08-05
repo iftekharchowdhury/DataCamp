@@ -29,18 +29,27 @@ Python is perfectly suited to do basic calculations. Apart from addition, subtra
 <li>The code in the script on the right gives some examples.</li>
 
 ## Suppose you have $100, which you can invest with a 10% return each year. After one year, 
-## it's 100×1.1=110
-## 100×1.1=110
-## dollars, and after two years it's 
-## 100×1.1×1.1=121
-## 100×1.1×1.1=121
-## . Add code on the right to calculate how much money you end up with after 7 years.
+it's 100×1.1=110
+100×1.1=110
+dollars, and after two years it's 
+100×1.1×1.1=121
+100×1.1×1.1=121
+Add code on the right to calculate how much money you end up with after 7 years.
 
 ## Variable Assignment
-## <li>In Python, a variable allows you to refer to a value with a name. To create a variable use =, like this example:</li>
-## <li>x = 5</li>
-## <li>You can now use the name of this variable, x, instead of the actual value, 5.</li>
-## <li>Remember, = in Python means assignment, it doesn't test equality!</li>
+ <li>In Python, a variable allows you to refer to a value with a name. To create a variable use =, like this example:</li>
+<li>x = 5</li>
+<li>You can now use the name of this variable, x, instead of the actual value, 5.</li>
+<li>Remember, = in Python means assignment, it doesn't test equality!</li>
 
+## Exercise 5 
+#### Calculations with variables
 
+Remember how you calculated the money you ended up with after 7 years of investing $100? You did something like this:
+100 * 1.10 ** 7
+Instead of calculating with the actual values, you can use variables instead. The savings variable you've created in the previous exercise represents the $100 you started with. It's up to you to create a new variable to represent 1.10 and then redo the calculations!
+
+<li>Create a variable factor, equal to 1.10.</li>
+<li>Use savings and factor to calculate the amount of money you end up with after 7 years. Store the result in a new variable, result.</li>
+<li>Print out the value of result.</li>
 </p>
