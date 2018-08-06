@@ -73,23 +73,42 @@ profitable = True
 
 ```
 ## Guess the type
+
 To find out the type of a value or a variable that refers to that value, you can use the type() function. Suppose you've defined a variable a, but you forgot the type of this variable. To determine the type of a, simply execute:
 type(a)
 We already went ahead and created three variables: a, b and c. You can use the IPython shell on the right to discover their type. Which of the following options is correct?
 
 ## Operations with other types
+
 Filip mentioned that different types behave differently in Python.
 When you sum two strings, for example, you'll get different behavior than when you sum two integers or two booleans.
 In the script some variables with different types have already been created. It's up to you to use them.
 
 ## Instructions
+
 <li>Calculate the product of savings and factor. Store the result in year1.</li>
 What do you think the resulting type will be? Find out by printing out the type of year1.</li>
 <li>Calculate the sum of desc and desc and store the result in a new variable doubledesc.
 <li>Print out doubledesc. Did you expect this?</li>
 
+## Create a list
 
+As opposed to int, bool etc., a list is a compound data type; you can group values together:
 
+```python 
+
+a = "is"
+b = "nice"
+my_list = ["my", "list", a, b]
+
+```
+After measuring the height of your family, you decide to collect some information on the house you're living in. The areas of the different parts of your house are stored in separate variables for now, as shown in the script.
+
+## Instructions
+
+<li>Create a list, areas, that contains the area of the hallway (hall), kitchen (kit), living room (liv), bedroom (bed) and bathroom (bath), in this order. Use the predefined variables.</li>
+
+<li>Print areas with the print() function.</li>
 
 
 
