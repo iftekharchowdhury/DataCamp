@@ -53,3 +53,28 @@ Instead of calculating with the actual values, you can use variables instead. Th
 <li>Use savings and factor to calculate the amount of money you end up with after 7 years. Store the result in a new variable, result.</li>
 <li>Print out the value of result.</li>
 </p>
+
+## Other variable types
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
