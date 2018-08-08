@@ -262,7 +262,67 @@ downstairs = areas[0:6]
 upstairs = areas[6:11]
 
 # Print out downstairs and upstairs
-print (downstairs)
+print (downstairs)x[2] results in a list, that you can subset again by adding additional square brackets.
 print (upstairs)
 ```
+# Subsetting lists of lists
+
+You saw before that a Python list can contain practically anything; even other lists! To subset lists of lists, you can use the same technique as before: square brackets. Try out the commands in the following code sample in the IPython Shell:
+
+```python
+
+x = [["a", "b", "c"],
+     ["d", "e", "f"],
+     ["g", "h", "i"]]
+x[2][0]
+x[2][:2]
+```
+What will house[-1][1] return? house, the list of lists that you created before, is already defined for you in the workspace. You can experiment with it in the IPython Shell.
+
+# Replace list elements
+Replacing list elements is pretty easy. Simply subset the list and assign new values to the subset. You can select single elements or you can change entire list slices at once.
+Use the IPython Shell to experiment with the commands below. Can you tell what's happening and why?
+
+```python
+
+x = ["a", "b", "c", "d"]
+x[1] = "r"
+x[2:] = ["s", "t"]
+```
+For this and the following exercises, you'll continue working on the areas list that contains the names and areas of different rooms in a house.
+
+* Update the area of the bathroom area to be 10.50 square meters instead of 9.50.
+* Make the areas list more trendy! Change "living room" to "chill zone".
+
+```python
+
+# Create the areas list
+areas = ["hallway", 11.25, "kitchen", 18.0, "living room", 20.0, "bedroom", 10.75, "bathroom", 9.50]
+# Correct the bathroom area
+areas[-1] = 10.50
+# Change "living room" to "chill zone"
+areas[4]="chill zone"
+print (areas )
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
