@@ -576,9 +576,61 @@ np_baseball = np.array(baseball)
 # Print out type of np_baseball
 print (type(np_baseball))
 ```
+# Baseball players' height
 
+You are a huge baseball fan. You decide to call the MLB (Major League Baseball) and ask around for some more statistics on the height of the main players. They pass along data on more than a thousand players, which is stored as a regular Python list: height. The height is expressed in inches. Can you make a numpy array out of it and convert the units to meters?
+height is already available and the numpy package is loaded, so you can start straight away (Source: stat.ucla.edu)
 
+## Instructions
 
+* Create a numpy array from height. Name this new array np_height.
+* Print np_height.
+* Multiply np_height with 0.0254 to convert all height measurements from inches to meters. Store the new values in a new array, np_height_m.
+* Print out np_height_m and check if the output makes sense.
 
+```python
 
+# height is available as a regular list
 
+# Import numpy
+import numpy as np
+
+# Create a numpy array from height: np_height
+np_height = np.array(height)
+
+# Print out np_height
+print (np_height)
+
+# Convert np_height to m: np_height_m
+np_height_m = np_height * 0.0254
+# Print np_height_m
+print (np_height_m)
+```
+## Baseball player's BMI
+The MLB also offers to let you analyze their weight data. Again, both are available as regular Python lists: height and weight. height is in inches and weight is in pounds.
+It's now possible to calculate the BMI of each baseball player. Python code to convert height to a numpy array with the correct units is already available in the workspace. Follow the instructions step by step and finish the game!
+
+Create a numpy array from the weight list with the correct units. Multiply by 0.453592 to go from pounds to kilograms. Store the resulting numpy array as np_weight_kg.
+Use np_height_m and np_weight_kg to calculate the BMI of each player. Use the following equation: 
+
+**BMI = weight(kg)/height(m)^2**
+* Save the resulting numpy array as bmi. Print out bmi.
+
+```python
+# height and weight are available as regular lists
+
+# Import numpy
+import numpy as np
+
+# Create array from height with correct units: np_height_m
+np_height_m = np.array(height) * 0.0254
+
+# Create array from weight with correct units: np_weight_kg
+np_weight_kg = np.array(weight) * 0.453592
+
+# Calculate the BMI: bmi
+
+bmi = np_weight_kg / np_height_m ** 2
+# Print out bmi
+print ((bmi))
+```
