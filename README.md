@@ -813,3 +813,7 @@ np_weight = np_baseball[:,1]
 print (np_baseball[123,0])
 ```
 
+
+
+
+
