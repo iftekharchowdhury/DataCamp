@@ -63,6 +63,27 @@ plt.xlabel('fixed acidity (g(tartaric acid)/dm$^3$)')
 plt.ylabel('count')
 plt.show()
 ```
+# Importing non-flat files from the web
+Congrats! You've just loaded a flat file from the web into a DataFrame without first saving it locally using the pandas function pd.read_csv(). This function is super cool because it has close relatives that allow you to load all types of files, not only flat ones. In this interactive exercise, you'll use pd.read_excel() to import an Excel spreadsheet.
+
+The URL of the spreadsheet is
+'http://s3.amazonaws.com/assets.datacamp.com/course/importing_data_into_r/latitude.xls'
+Your job is to use pd.read_excel() to read in all of its sheets, print the sheet names and then print the head of the first sheet using its name, not its index.
+Note that the output of pd.read_excel() is a Python dictionary with sheet names as keys and corresponding DataFrames as corresponding values.
+
+## Instructions
+* Assign the URL of the file to the variable url.
+* Read the file in url into a dictionary xl using pd.read_excel() recalling that, in order to import all sheets you need to pass None to the argument sheetname.
+* Print the names of the sheets in the Excel spreadsheet; these will be the keys of the dictionary xl.
+* Print the head of the first sheet using the sheet name, not the index of the sheet! The sheet name is '1700'
+
+
+
+
+
+
+
+
 
 
 
