@@ -52,6 +52,25 @@ print(df.info())
 # Print the info of df_subset
 print(df_subset.info())
 ```
+# Calculating summary statistics
+
+You'll now use the .describe() method to calculate summary statistics of your data.
+In this exercise, the columns 'Initial Cost' and 'Total Est. Fee' have been cleaned up for you. That is, the dollar sign has been removed and they have been converted into two new numeric columns: initial_cost and total_est_fee. You'll learn how to do this yourself in later chapters. It's also worth noting that some columns such as Job # are encoded as numeric columns, but it does not make sense to compute summary statistics for such columns.
+This cleaned DataFrame has been pre-loaded as df. Your job is to use the .describe() method on it in the IPython Shell and select the statement below that is False.
+
+# Frequency counts for categorical data
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
