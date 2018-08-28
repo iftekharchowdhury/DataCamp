@@ -405,9 +405,35 @@ For example, if you know the pattern is part_ single digit number .csv, you can 
 
 Similarly, you can find all .csv files with '*.csv', or all parts with 'part_*'. The ? wildcard represents any 1 character, and the * wildcard represents any number of characters.
 
+## Instructions
+* Import the glob module along with pandas (as its usual alias pd).
+* Write a pattern to match all .csv files.
+* Save all files that match the pattern using the glob() function within the glob module. That is, by using glob.glob().
+* Print the list of file names. This has been done for you.
+* Read the second file in csv_files (i.e., index 1) into a DataFrame called csv2.
+* Hit 'Submit Answer' to print the head of csv2. Does it look familiar?
 
+```python
 
+# Import necessary modules
+import pandas as pd
+import glob
 
+# Write the pattern: pattern
+pattern = '*.csv'
+
+# Save all file matches: csv_files
+csv_files = glob.glob(pattern)
+
+# Print the file names
+print(csv_files)
+
+# Load the second file into a DataFrame: csv2
+csv2 = pd.read_csv(csv_files[1])
+
+# Print the head of csv2
+print(csv2.head())
+```
 
 
 
