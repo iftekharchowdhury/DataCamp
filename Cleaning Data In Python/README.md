@@ -317,6 +317,7 @@ tb_melt['age_group'] = tb_melt.variable.str[1:]
 
 # Print the head of tb_melt
 print(tb_melt.head())
+
 ```
 
 
