@@ -372,6 +372,53 @@ print(row_concat.shape)
 # Print the head of row_concat
 print(row_concat.head())
 ```
+# Combining columns of data
+Think of column-wise concatenation of data as stitching data together from the sides instead of the top and bottom. To perform this action, you use the same pd.concat() function, but this time with the keyword argument axis=1. The default, axis=0, is for a row-wise concatenation.
+
+You'll return to the Ebola dataset you worked with briefly in the last chapter. It has been pre-loaded into a DataFrame called ebola_melt. In this DataFrame, the status and country of a patient is contained in a single column. This column has been parsed into a new DataFrame, status_country, where there are separate columns for status and country. 
+
+Explore the ebola_melt and status_country DataFrames in the IPython Shell. Your job is to concatenate them column-wise in order to obtain a final, clean DataFrame.
+
+## Instructions
+
+* Concatenate ebola_melt and status_country column-wise into a single DataFrame called ebola_tidy. Be sure to specify axis=1 and to pass the two DataFrames in as a list.
+
+* Print the shape and then the head of the concatenated DataFrame, ebola_tidy.
+
+```python
+
+# Concatenate ebola_melt and status_country column-wise: ebola_tidy
+ebola_tidy = pd.concat([ebola_melt,status_country],axis=1)
+
+# Print the shape of ebola_tidy
+print(ebola_tidy.shape)
+
+# Print the head of ebola_tidy
+print(ebola_tidy.head())
+```
+# Finding files that match a pattern
+You're now going to practice using the glob module to find all csv files in the workspace. In the next exercise, you'll programmatically load them into DataFrames.
+
+As Dan showed you in the video, the glob module has a function called glob that takes a pattern and returns a list of the files in the working directory that match that pattern.
+
+For example, if you know the pattern is part_ single digit number .csv, you can write the pattern as 'part_?.csv' (which would match part_1.csv, part_2.csv, part_3.csv, etc.)
+
+Similarly, you can find all .csv files with '*.csv', or all parts with 'part_*'. The ? wildcard represents any 1 character, and the * wildcard represents any number of characters.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
