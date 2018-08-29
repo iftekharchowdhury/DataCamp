@@ -738,6 +738,11 @@ tips['total_dollar_re'] = tips.total_dollar.apply(lambda x: re.findall('\d+\.\d+
 # Print the head of tips
 print(tips.head())
 ```
+# Dropping duplicate data
+Duplicate data causes a variety of problems. From the point of view of performance, they use up unnecessary amounts of memory and cause unneeded calculations to be performed when processing data. In addition, they can also bias any analysis results.
+
+A dataset consisting of the performance of songs on the Billboard charts has been pre-loaded into a DataFrame called billboard. Check out its columns in the IPython Shell. Your job in this exercise is to subset this DataFrame and then drop all duplicate rows.
+
 
 
 
