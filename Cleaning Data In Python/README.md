@@ -833,6 +833,17 @@ plt.ylim(20, 55)
 # Display the plot
 plt.show()
 ```
+# Thinking about the question at hand
+Since you are given life expectancy level data by country and year, you could ask questions about how much the average life expectancy changes over each year.
+Before continuing, however, it's important to make sure that the following assumptions about the data are true:
+
+'Life expectancy' is the first column (index 0) of the DataFrame.
+The other columns contain either null or numeric values.
+The numeric values are all greater than or equal to 0.
+There is only one instance of each country.
+
+You can write a function that you can apply over the entire DataFrame to verify some of these assumptions. Note that spending the time to write such a script will help you when working with other datasets as well.
+
 
 
 
