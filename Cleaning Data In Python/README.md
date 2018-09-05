@@ -1272,6 +1272,41 @@ All necessary modules have been imported for you, and the DataFrame is available
 * Specify the y-axis label.
 * Display the plot
 
+```python
+
+# Create a list of y-axis column names: y_columns
+y_columns = ['AAPL', 'IBM']
+
+# Generate a line plot
+df.plot(x='Month', y=y_columns)
+
+# Add the title
+plt.title('Monthly stock prices')
+
+# Add the y-axis label
+plt.ylabel('Price ($US)')
+
+# Display the plot
+plt.show()
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
