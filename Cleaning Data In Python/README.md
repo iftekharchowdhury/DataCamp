@@ -1372,6 +1372,8 @@ plt.show()
 df.fraction.plot(ax=axes[1], kind='hist', normed=True, bins=30, cumulative=True, range=(0,.3))
 plt.show()
 ```
+# Today nothing is happened
+
 
 
 
