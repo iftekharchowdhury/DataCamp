@@ -1372,9 +1372,23 @@ plt.show()
 df.fraction.plot(ax=axes[1], kind='hist', normed=True, bins=30, cumulative=True, range=(0,.3))
 plt.show()
 ```
-# Today nothing is happened
+# Fuel efficiency
+From the automobiles data set, which value corresponds to the median value of the 'mpg' column? Your job is to select the 'mpg' column and call the .median() method on it. The automobile DataFrame has been provided as df.
 
+# Bachelor's degrees awarded to women
+In this exercise, you will investigate statistics of the percentage of Bachelor's degrees awarded to women from 1970 to 2011. Data is recorded every year for 17 different fields. This data set was obtained from the Digest of Education Statistics.
+Your job is to compute the minimum and maximum values of the 'Engineering' column and generate a line plot of the mean value of all 17 academic fields per year. To perform this step, you'll use the .mean() method with the keyword argument axis='columns'. This computes the mean across all columns per row.
+The DataFrame has been pre-loaded for you as df with the index set to 'Year'.
 
+## Instructions
+* Print the minimum value of the 'Engineering' column.
+* Print the maximum value of the 'Engineering' column.
+* Construct the mean percentage per year with .mean(axis='columns'). Assign the result to mean.
+* Plot the average percentage per year. Since 'Year' is the index of df, it will appear on the x-axis of the plot. No keyword arguments are needed in your call to .plot().
+
+```python
+
+```
 
 
 
