@@ -1415,8 +1415,17 @@ All necessary modules have been imported and the DataFrame is available in the w
 * Print summary statistics of the 'fare' column of df with .describe() and print(). Note: df.fare and df['fare'] are equivalent.
 * Generate a box plot of the 'fare' column.
 
+```python
 
+# Print summary statistics of the fare column with .describe()
+print(df.fare.describe())
 
+# Generate a box plot of the fare column
+df.fare.plot(kind='box')
+
+# Show the plot
+plt.show()
+```
 
 
 
