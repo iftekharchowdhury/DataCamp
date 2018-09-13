@@ -162,11 +162,47 @@ sum13 = ts1 + ts3
 # Combine ts1 + ts4: sum14
 sum14 = ts1 + ts4
 ```
+# Resampling and frequency
+Pandas provides methods for resampling time series data. When downsampling or upsampling, the syntax is similar, but the methods called are different. Both use the concept of 'method chaining' - df.method1().method2().method3() - to direct the output from one method call to the input of the next, and so on, as a sequence of operations, one feeding into the next. 
+For example, if you have hourly data, and just need daily data, pandas will not guess how to throw out the 23 of 24 points. You must specify this in the method. One approach, for instance, could be to take the mean, as in df.resample('D').mean(). 
+In this exercise, a data set containing hourly temperature data has been pre-loaded for you. Your job is to resample the data using a variety of aggregation methods to answer a few questions.
 
+## Instructions
+* Downsample the 'Temperature' column of df to 6 hour data using .resample('6h') and .mean(). Assign the result to df1.
+* Downsample the 'Temperature' column of df to daily data using .resample('D') and then count the number of data points in each day with .count(). Assign the result df2.
 
+```python
 
+# Downsample to 6 hour data and aggregate by mean: df1
+df1 = df['Temperature'].resample('6h').mean()
 
+# Downsample to daily data and count the number of data points: df2
+df2 = df ['Temperature'].resample('D').count()
+```
+# Separating and resampling
+With pandas, you can resample in different ways on different subsets of your data. For example, resampling different months of data with different aggregations. In this exercise, the data set containing hourly temperature data from the last exercise has been pre-loaded. 
+Your job is to resample the data using a variety of aggregation methods. The DataFrame is available in the workspace as df. You will be working with the 'Temperature' column.
 
+## Instructions
+Use partial string indexing to extract temperature data for August 2010 into august.
+Use the temperature data for August and downsample to find the daily maximum temperatures. Store the result in august_highs.
+Use partial string indexing to extract temperature data for February 2010 into february.
+Use the temperature data for February and downsample to find the daily minimum temperatures. Store the result in february_lows.
+
+```python
+
+# Extract temperature data for August: august
+august = df['Temperature']['2010-August']
+
+# Downsample to obtain only the daily highest temperatures in August: august_highs
+august_highs = august.resample('D').max()
+
+# Extract temperature data for February: february
+february = df['Temperature']['2010-February']
+
+# Downsample to obtain the daily lowest temperatures in February: february_lows
+february_lows = february.resample('D').min()
+```
 
 
 
