@@ -44,6 +44,24 @@ census = Table('census', metadata, autoload=True, autoload_with=engine)
 # Print census table metadata
 print(repr(census))
 ```
+# Viewing Table Details
+Great job reflecting the census table! Now you can begin to learn more about the columns and structure of your table. It is important to get an understanding of your database by examining the column names. This can be done by using the .columns attribute and accessing the .keys() method. For example, census.columns.keys() would return a list of column names of the census table.
+Following this, we can use the metadata container to find out more details about the reflected table such as the columns and their types. For example, table objects are stored in the metadata.tables dictionary, so you can get the metadata of your census table with metadata.tables['census']. This is similar to your use of the repr() function on the census table from the previous exercise.
+
+
+```python
+
+# Reflect the census table from the engine: census
+census = Table('census', metadata, autoload=True, autoload_with=engine)
+
+# Print the column names
+print(census.columns.keys())
+
+# Print full table metadata
+print(repr(metadata.tables['census']))
+```
+
+
 
 
 
