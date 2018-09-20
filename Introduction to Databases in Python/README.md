@@ -114,10 +114,61 @@ print(stmt)
 print(connection.execute(stmt).fetchall())
  ```
 
+# Handling a ResultSet
 
+Recall the differences between a ResultProxy and a ResultSet:
+ResultProxy: The object returned by the .execute() method. It can be used in a variety of ways to get the data returned by the query.
+ResultSet: The actual data asked for in the query when using a fetch method such as .fetchall() on a ResultProxy.
+This separation between the ResultSet and ResultProxy allows us to fetch as much or as little data as we desire.
 
+Once we have a ResultSet, we can use Python to access all the data within it by column name and by list style indexes. For example, you can get the first row of the results by using results[0]. With that first row then assigned to a variable first_row, you can get data from the first column by either using first_row[0] or by column name such as first_row['column_name']. You'll now practice exactly this using the ResultSet you obtained from the census table in the previous exercise. It is stored in the variable results. Enjoy!
 
+## Instructions
+* Extract the first row of results and assign it to the variable first_row.
+* Print the value of the first column in first_row.
+* Print the value of the 'state' column in first_row.
 
+```python
+
+# Get the first row of the results by using an index: first_row
+first_row = results[0]
+
+# Print the first row of the results
+print(first_row)
+
+# Print the first column of the first row by using an index
+print(first_row[0])
+
+# Print the 'state' column of the first row by using its name
+print(first_row['state'])
+```
+# Connecting to a PostgreSQL Database
+In these exercises, you will be working with real databases hosted on the cloud via Amazon Web Services (AWS)! 
+Let's begin by connecting to a PostgreSQL database. When connecting to a PostgreSQL database, many prefer to use the psycopg2 database driver as it supports practically all of PostgreSQL's features efficiently and is the standard dialect for PostgreSQL in SQLAlchemy.
+You might recall from Chapter 1 that we use the create_engine() function and a connection string to connect to a database. 
+
+There are three components to the connection string in this exercise: the dialect and driver ('postgresql+psycopg2://'), followed by the username and password ('student:datacamp'), followed by the host and port ('@postgresql.csrrinzqubik.us-east-1.rds.amazonaws.com:5432/'), and finally, the database name ('census'). You will have to pass this string as an argument to create_engine() in order to connect to the database.
+
+## Instructions
+* Import create_engine from sqlalchemy.
+* Create an engine to the census database by concatenating the following strings:
+'postgresql+psycopg2://'
+'student:datacamp'
+'@postgresql.csrrinzqubik.us-east-1.rds.amazonaws.com'
+':5432/census'
+* Use the .table_names() method on engine to print the table names.
+
+```python
+
+# Import create_engine function
+from sqlalchemy import create_engine
+
+# Create an engine to the census database
+engine = create_engine('postgresql+psycopg2://student:datacamp'+'@postgresql.csrrinzqubik.us-east-1.rds.amazonaws.com:5432/census')
+
+# Use the .table_names() method on the engine to print the table names
+print(engine.table_names())
+```
 
 
 
