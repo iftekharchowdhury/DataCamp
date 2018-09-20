@@ -641,17 +641,80 @@ result = connection.execute(stmt).first()
 for key in result.keys():
     print(key, getattr(result, key))
 ```
+# More Practice with Joins
+You can use the same select statement you built in the last exercise, however, let's add a twist and only return a few columns and use the other table in a group_by() clause.
 
+## instructions
+* Build a statement to select:
+* The state column from the census table. 
+* The sum of the pop2008 column from the census table. 
+* The census_division_name column from the state_fact table.
+* Append a .select_from() to stmt in order to join the census and state_fact tables by the state and name columns.
+* Group the statement by the name column of the state_fact table.
+* Execute the statement to get all the records and save it as results.
+* Hit 'Submit Answer' to loop over the results object and print each record.
 
+```python
 
+# Build a statement to select the state, sum of 2008 population and census
+# division name: stmt
+stmt = select([
+    census.columns.state,
+    func.sum(census.columns.pop2008),
+    state_fact.columns.census_division_name
+])
 
+# Append select_from to join the census and state_fact tables by the census state and state_fact name columns
+stmt = stmt.select_from(
+    census.join(state_fact, census.columns.state == state_fact.columns.name)
+)
 
+# Append a group by for the state_fact name column
+stmt = stmt.group_by(state_fact.columns.name)
 
+# Execute the statement and get the results: results
+results = connection.execute(stmt).fetchall()
 
+# Loop over the results object and print each record.
+for record in results:
+    print(record)
 
+```
+# Using alias to handle same table joined queries
+Often, you'll have tables that contain hierarchical data, such as employees and managers who are also employees. For this reason, you may wish to join a table to itself on different columns. The .alias() method, which creates a copy of a table, helps accomplish this task. Because it's the same table, you only need a where clause to specify the join condition. 
+Here, you'll use the .alias() method to build a query to join the employees table against itself to determine to whom everyone reports.
 
+## instructions
+Save an alias of the employees table as managers. To do so, apply the method .alias() to employees.
+Build a query to select the employee name and their manager's name. The manager's name has already been selected for you. Use label to label the name column of employees as 'employee'.
+Append a where clause to stmt to match where the id column of the managers table corresponds to the mgr column of the employees table.
+Order the statement by the name column of the managers table.
+Execute the statement and store all the results. This code is already written. Hit 'Submit Answer' to print the names of the managers and all their employees.
 
+```python
 
+# Make an alias of the employees table: managers
+managers = employees.alias()
+
+# Build a query to select manager's and their employees names: stmt
+stmt = select(
+    [managers.columns.name.label('manager'),
+     employees.columns.name.label('employee')]
+)
+
+# Match managers id with employees mgr: stmt
+stmt = stmt.where(managers.columns.id == employees.columns.mgr)
+
+# Order the statement by the managers name: stmt
+stmt = stmt.order_by(managers.columns.name)
+
+# Execute statement: results
+results = connection.execute(stmt).fetchall()
+
+# Print records
+for record in results:
+    print(record)
+```
 
 
 
