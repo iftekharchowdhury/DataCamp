@@ -281,21 +281,80 @@ print(results[:10])
 
 ```
 
+# Ordering in Descending Order by a Single Column
+You can also use .order_by() to sort from highest to lowest by wrapping a column in the desc() function. Although you haven't seen this function in action, it generalizes what you have already learned.
+Pass desc() (for "descending") inside an .order_by() with the name of the column you want to sort by. For instance, stmt.order_by(desc(table.columns.column_name)) sorts column_name in descending order.
 
+## Instructions
+* Import desc from the sqlalchemy module.
+* Select all records of the state column from the census table. 
+* Append an .order_by() to sort the result output by the state column in descending order. Save the result as rev_stmt.
+* Execute rev_stmt using connection.execute() and fetch all the results with .fetchall(). Save them as rev_results.
+* Print the first 10 rows of rev_results.
 
+```python
 
+# Import desc
+from sqlalchemy import desc
 
+# Build a query to select the state column: stmt
+stmt = select([census.columns.state])
 
+# Order stmt by state in descending order: rev_stmt
+rev_stmt = stmt.order_by(desc(census.columns.state))
 
+# Execute the query and store the results: rev_results
+rev_results = connection.execute(rev_stmt).fetchall()
 
+# Print the first 10 rev_results
+print(rev_results[:10])
+```
+# Ordering by Multiple Columns
+We can pass multiple arguments to the .order_by() method to order by multiple columns. In fact, we can also sort in ascending or descending order for each individual column. Each column in the .order_by() method is fully sorted from left to right. This means that the first column is completely sorted, and then within each matching group of values in the first column, it's sorted by the next column in the .order_by() method. This process is repeated until all the columns in the .order_by() are sorted.
 
+## instructions
+Select all records of the state and age columns from the census table. 
+Use .order_by() to sort the output of the state column in ascending order and age in descending order. (NOTE: desc is already imported).
+Execute stmt using the .execute() method on connection and retrieve all the results using .fetchall().
+Print the first 20 results.
 
+```python
 
+# Build a query to select state and age: stmt
+stmt = select([census.columns.state, census.columns.age])
 
+# Append order by to ascend by state and descend by age
+stmt = stmt.order_by(census.columns.state, desc(census.columns.age))
 
+# Execute the statement and store all the records: results
+results = connection.execute(stmt).fetchall()
 
+# Print the first 20 results
+print(results[:20])
+```
+# Counting Distinct Data
+As mentioned in the video, SQLAlchemy's func module provides access to built-in SQL functions that can make operations like counting and summing faster and more efficient. 
+In the video, Jason used func.sum() to get a sum of the pop2008 column of census as shown below: 
+select([func.sum(census.columns.pop2008)])
+If instead you want to count the number of values in pop2008, you could use func.count() like this:
+select([func.count(census.columns.pop2008)])
+Furthermore, if you only want to count the distinct values of pop2008, you can use the .distinct() method:
+select([func.count(census.columns.pop2008.distinct())])
+In this exercise, you will practice using func.count() and .distinct() to get a count of the distinct number of states in census.
+So far, you've seen .fetchall() and .first() used on a ResultProxy to get the results. The ResultProxy also has a method called .scalar() for getting just the value of a query that returns only one row and column. 
+This can be very useful when you are querying for just a count or sum.
 
+```python
 
+# Build a query to count the distinct states values: stmt
+stmt = select([func.count(census.columns.state.distinct())])
+
+# Execute the query and store the scalar result: distinct_state_count
+distinct_state_count = connection.execute(stmt).scalar()
+
+# Print the distinct_state_count
+print(distinct_state_count)
+```
 
 
 
