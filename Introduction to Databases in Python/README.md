@@ -169,9 +169,55 @@ engine = create_engine('postgresql+psycopg2://student:datacamp'+'@postgresql.csr
 # Use the .table_names() method on the engine to print the table names
 print(engine.table_names())
 ```
+# Filter data selected from a Table - Simple
 
+Having connected to the database, it's now time to practice filtering your queries!
+As mentioned in the video, a where() clause is used to filter the data that a statement returns. For example, to select all the records from the census table where the sex is Female (or 'F') we would do the following:
+select([census]).where(census.columns.sex == 'F')
+In addition to == we can use basically any python comparison operator (such as <=, !=, etc) in the where() clause.
 
+## Instructions
+* Select all records from the census table by passing in census as a list to select().
+* Append a where clause to stmt to return only the records with a state of 'New York'.
+* Execute the statement stmt using .execute() and retrieve the results using .fetchall().
+* Iterate over results and print the age, sex and pop2008 columns from each record. For example, you can print out the age of result with result.age.
 
+```python
+
+# Create a select query: stmt
+stmt = select([census])
+
+# Add a where clause to filter the results to only those for New York
+stmt = stmt.where(census.columns.state == 'New York')
+
+# Execute the query to retrieve all the data returned: results
+results = connection.execute(stmt).fetchall()
+print (results)
+# Loop over the results and print the age, sex, and pop2008
+for result in results:
+    print(result.age, result.sex, result.pop2008)
+```
+# Filter data selected from a Table - Expressions
+In addition to standard Python comparators, we can also use methods such as in_() to create more powerful where() clauses. You can see a full list of expressions in the SQLAlchemy Documentation.
+We've already created a list of some of the most densely populated states.
+
+## Instructions
+* Select all records from the census table by passing it in as a list to select().
+* Append a where clause to return all the records with a state in the states list. Use in_(states) on census.columns.state to do this.
+* Loop over the ResultProxy connection.execute(stmt) and print the state and pop2000 columns from each record.
+
+```python
+
+# Create a query for the census table: stmt
+stmt = select([census])
+
+# Append a where clause to match all the states in_ the list states
+stmt = stmt.where(census.columns.state.in_(states))
+
+# Loop over the ResultProxy and print the state and its population in 2000
+for ResultProxy in connection.execute(stmt):
+    print(ResultProxy.state, ResultProxy.pop2000)
+```
 
 
 
