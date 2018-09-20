@@ -424,13 +424,163 @@ print(results)
 print(results[0].keys())
 ```
 
+# SQLAlchemy ResultsProxy and Pandas Dataframes
+We can feed a ResultProxy directly into a pandas DataFrame, which is the workhorse of many Data Scientists in PythonLand. Jason demonstrated this in the video. In this exercise, you'll follow exactly the same approach to convert a ResultProxy into a DataFrame.
+
+## instructions
+* Import pandas as pd.
+* Create a DataFrame df using pd.DataFrame() on the ResultProxy results.
+* Set the columns of the DataFrame df.columns to be the columns from the first result object results[0].keys().
+* Print the DataFrame.
+
+```python
+
+# import pandas
+import pandas as pd
+
+# Create a DataFrame from the results: df
+df = pd.DataFrame(results)
+
+# Set column names
+df.columns = results[0].keys()
+
+# Print the Dataframe
+print(df)
+```
+# From SQLAlchemy results to a Graph
+We can also take advantage of pandas and Matplotlib to build figures of our data. Remember that data visualization is essential for both exploratory data analysis and communication of your data!
+
+## Instructions
+* Import matplotlib.pyplot as plt.
+* Create a DataFrame df using pd.DataFrame() on the provided results.
+* Set the columns of the DataFrame df.columns to be the columns from the first result object results[0].keys().
+* Print the DataFrame df.
+* Use the plot.bar() method on df to create a bar plot of the results.
+* Display the plot with plt.show().
+
+```python
+
+# Import Pyplot as plt from matplotlib
+import matplotlib.pyplot as plt
+
+# Create a DataFrame from the results: df
+df = pd.DataFrame(results)
+
+# Set Column names
+df.columns = results[0].keys()
+
+# Print the DataFrame
+print (df)
+
+# Plot the DataFrame
+df.plot.bar()
+plt.show()
+```
+
+# Connecting to a MySQL Database
+Before you jump into the calculation exercises, let's begin by connecting to our database. Recall that in the last chapter you connected to a PostgreSQL database. Now, you'll connect to a MySQL database, for which many prefer to use the pymysql database driver, which, like psycopg2 for PostgreSQL, you have to install prior to use. 
+
+This connection string is going to start with 'mysql+pymysql://', indicating which dialect and driver you're using to establish the connection. The dialect block is followed by the 'username:password' combo. Next, you specify the host and port with the following '@host:port/'. Finally, you wrap up the connection string with the 'database_name'. 
+
+Now you'll practice connecting to a MySQL database: it will be the same census database that you have already been working with. One of the great things about SQLAlchemy is that, after connecting, it abstracts over the type of database it has connected to and you can write the same SQLAlchemy code, regardless!
+
+## Instructions
+* Import the create_engine function from the sqlalchemy library.
+* Create an engine to the census database by concatenating the following strings and passing them to create_engine():
+* 'mysql+pymysql://' (the dialect and driver).
+* 'student:datacamp' (the username and password).
+* '@courses.csrrinzqubik.us-east-1.rds.amazonaws.com:3306/' (the host and port).
+* 'census' (the database name).
+* Use the .table_names() method on engine to print the table names.
+
+```python
+
+# Import create_engine function
+from sqlalchemy import create_engine
+
+# Create an engine to the census database
+engine = create_engine('mysql+pymysql://'+'student:datacamp'+'@courses.csrrinzqubik.us-east-1.rds.amazonaws.com:3306/'+ 'census')
+
+# Print the table names
+print(engine.table_names())
+```
+
+# Calculating a Difference between Two Columns
+Often, you'll need to perform math operations as part of a query, such as if you wanted to calculate the change in population from 2000 to 2008. For math operations on numbers, the operators in SQLAlchemy work the same way as they do in Python.
+You can use these operators to perform addition (+), subtraction (-), multiplication (*), division (/), and modulus (%) operations. Note: They behave differently when used with non-numeric column types. 
+Let's now find the top 5 states by population growth between 2000 and 2008.
+
+## Instructions
+* Define a select statement called stmt to return:
+* i) The state column of the census table (census.columns.state). 
+* ii) The difference in population count between 2008 (census.columns.pop2008) and 2000 (census.columns.pop2000) labeled as 'pop_change'.
+* Group the statement by census.columns.state.
+* Order the statement by population change ('pop_change') in descending order. Do so by passing it desc('pop_change').
+* Use the .limit() method on the statement to return only 5 records.
+* Execute the statement and fetchall the records.
+* The print statement has already been written for you. Hit 'Submit Answer' to view the results!
+
+```python
+
+# Build query to return state names by population difference from 2008 to 2000: stmt
+stmt = select([census.columns.state, (census.columns.pop2008- census.columns.pop2000).label('pop_change')])
+
+# Append group by for the state: stmt
+stmt = stmt.group_by(census.columns.state)
+
+# Append order by for pop_change descendingly: stmt
+stmt = stmt.order_by(desc('pop_change'))
+
+# Return only 5 results: stmt
+stmt = stmt.limit(5)
+
+# Use connection to execute the statement and fetch all results
+results = connection.execute(stmt).fetchall()
+
+# Print the state and population change for each record
+for result in results:
+    print('{}:{}'.format(result.state, result.pop_change))
+```
+# Determining the Overall Percentage of Females
+It's possible to combine functions and operators in a single select statement as well. These combinations can be exceptionally handy when we want to calculate percentages or averages, and we can also use the case() expression to operate on data that meets specific criteria while not affecting the query as a whole. The case() expression accepts a list of conditions to match and the column to return if the condition matches, followed by an else_ if none of the conditions match. We can wrap this entire expression in any function or math operation we like. 
+Often when performing integer division, we want to get a float back. While some databases will do this automatically, you can use the cast() function to convert an expression to a particular type.
 
 
+## Instructions
+* Import case, cast, and Float from sqlalchemy.
+* Build an expression female_pop2000to calculate female population in 2000. To achieve this:
+* Use case() inside func.sum().
+* The first argument of case() is a list containing a tuple of 
+* i) A boolean checking that census.columns.sex is equal to 'F'.
+* ii) The column census.columns.pop2000.
+* The second argument is the else_ condition, which should be set to 0.
+* Calculate the total population in 2000 and use cast() to convert it to Float.
+* Build a query to calculate the percentage of females in 2000. To do this, divide female_pop2000 by total_pop2000 and multiply by 100.
+* Execute the query and print percent_female.
 
+```python
 
+# import case, cast and Float from sqlalchemy
+from sqlalchemy import case, cast, Float
 
+# Build an expression to calculate female population in 2000
+female_pop2000 = func.sum(
+    case([
+        (census.columns.sex == 'F', census.columns.pop2000)
+    ], else_=0))
 
+# Cast an expression to calculate total population in 2000 to Float
+total_pop2000 = cast(func.sum(census.columns.pop2000), Float)
 
+# Build a query to calculate the percentage of females in 2000: stmt
+stmt = select([female_pop2000 / total_pop2000 * 100])
+
+# Execute the query and store the scalar result: percent_female
+percent_female = connection.execute(stmt).scalar()
+
+# Print the percentage
+print(percent_female)
+```
 
 
 
