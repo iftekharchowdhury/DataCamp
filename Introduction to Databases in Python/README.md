@@ -844,6 +844,77 @@ metadata.create_all(engine)
 # Print the table details
 print(repr(metadata.tables['data']))
 ```
+# Inserting a single row with an insert() statement
+There are several ways to perform an insert with SQLAlchemy; however, we are going to focus on the one that follows the same pattern as the select statement. 
+It uses an insert statement where you specify the table as an argument, and supply the data you wish to insert into the value via the .values() method as keyword arguments.
+Here, the name of the table is data.
+
+## Instructions
+
+Import insert and select from the sqlalchemy module.
+Build an insert statement for the data table to set name to 'Anna', count to 1, amount to 1000.00, and valid to True. Save the statement as stmt.
+Execute stmt with the connection and store the results.
+Print the rowcount attribute of results to see how many records were inserted.
+Build a select statement to query for the record with the name of 'Anna'.
+Hit 'Submit Answer' to print the results of executing the select statement.
+
+```python
+
+# Import insert and select from sqlalchemy
+from sqlalchemy import insert , select
+
+# Build an insert statement to insert a record into the data table: stmt
+stmt = insert(data).values(name='Anna', count=1, amount=1000.00, valid=True)
+
+# Execute the statement via the connection: results
+results = connection.execute(stmt)
+
+# Print result rowcount
+print(results.rowcount)
+
+# Build a select statement to validate the insert
+stmt = select([data]).where(data.columns.name == 'Anna')
+
+# Print the result of executing the query.
+print(connection.execute(stmt).first())
+```
+
+# Inserting Multiple Records at Once
+It's time to practice inserting multiple records at once! 
+As Jason showed you in the video, you'll want to first build a list of dictionaries that represents the data you want to insert. Then, in the .execute() method, you can pair this list of dictionaries with an insert statement, which will insert all the records in your list of dictionaries
+
+## Instructions
+* Build a list of dictionaries called values_list with two dictionaries. In the first dictionary set name to 'Anna', count to 1, amount to 1000.00, and valid to True. In the second dictionary of the list, set name to 'Taylor', count to 1, amount to 750.00, and valid to False.
+* Build an insert statement for the data table for a multiple insert, save it as stmt.
+* Execute stmt with the values_list via connection and store the results. Make sure values_list is the second argument to .execute().
+* Print the rowcount of the results
+
+```python
+
+# Build a list of dictionaries: values_list
+values_list = [
+    {'name': 'Anna', 'count': 1, 'amount': 1000.00, 'valid': True},
+    {'name': 'Taylor', 'count': 1, 'amount': 750.00, 'valid': False}
+]
+
+# Build an insert statement for the data table: stmt
+stmt = insert(data)
+
+# Execute stmt with the values_list: results
+results = connection.execute(stmt, values_list)
+
+# Print rowcount
+print(results.rowcount)
+```
+
+
+
+
+
+
+
+
+
 
 
 
