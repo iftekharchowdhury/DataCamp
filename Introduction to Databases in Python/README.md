@@ -1197,6 +1197,119 @@ for row in csv_reader:
     # Append the dictionary to the values list
     values_list.append(data)
 ```
+# Load Data from a list into the Table
+Using the multiple insert pattern, in this exercise, you will load the data from values_list into the table.
+
+## Instructions
+* Import insert from sqlalchemy.
+* Build an insert statement for the census table.
+* Execute the statement stmt along with values_list. You will need to pass them both as arguments to connection.execute().
+* Print the rowcount attribute of results.
+
+```python
+
+# Import insert
+from sqlalchemy import insert
+
+# Build insert statement: stmt
+stmt = insert(census)
+
+# Use values_list to insert data: results
+results = connection.execute(stmt, values_list)
+
+# Print rowcount
+print(results.rowcount)
+```
+# Build a Query to Determine the Average Age by Population
+In this exercise, you will use the func.sum() and group_by() methods to first determine the average age weighted by the population in 2008, and then group by sex.
+As Jason discussed in the video, a weighted average is calculated as the sum of the product of the weights and averages divided by the sum of all the weights.
+For example, the following statement determines the average age weighted by the population in 2000: 
+
+```code
+
+stmt = select([census.columns.sex,
+               (func.sum(census.columns.pop2000 * census.columns.age) /
+                func.sum(census.columns.pop2000)).label('average_age')
+               ])
+```
+
+## Instructions
+* Import select from sqlalchemy.
+* Build a statement to:
+* Select sex from the census table.
+* Select the average age weighted by the population in 2008 (pop2008). See the example given in the assignment text to see how you can do this. Label this average age calculation as 'average_age'.
+Group the query by sex.
+* Execute the query and store it as results.
+* Loop over results and print the sex and average_age for each record.
+
+```python
+
+# Import select
+from sqlalchemy import select
+
+# Calculate weighted average age: stmt
+stmt = select([census.columns.sex,
+               (func.sum(census.columns.pop2008 * census.columns.age) /
+                func.sum(census.columns.pop2008)).label('average_age')
+               ])
+
+# Group by sex
+stmt = stmt.group_by(census.columns.sex)
+
+# Execute the query and store the results: results
+results = connection.execute(stmt).fetchall()
+
+# Print the average age by sex
+for result in results:
+    print(result.sex, result.average_age)
+```
+# Build a Query to Determine the Percentage of Population by Gender and State
+In this exercise, you will write a query to determine the percentage of the population in 2000 that comprised of women. You will group this query by state.
+
+## Instructions
+
+* Import case, cast and Float from sqlalchemy.
+* Define a statement to select state and the percentage of females in 2000.
+* Inside func.sum(), use case() to select females (using the sex column) from pop2000. Remember to specify else_=0 if the sex is not 'F'.
+* To get the percentage, divide the number of females in the year 2000 by the overall population in 2000. Cast the divisor - census.columns.pop2000 - to Float before multiplying by 100.
+* Group the query by state.
+* Execute the query and store it as results.
+* Print state and percent_female for each record. This has been done for you, so hit 'Submit Answer' to see the result.
+
+```python
+
+# import case, cast and Float from sqlalchemy
+from sqlalchemy import case, cast, Float
+
+# Build a query to calculate the percentage of females in 2000: stmt
+stmt = select([census.columns.state,
+    (func.sum(
+        case([
+            (census.columns.sex == 'F', census.columns.pop2000)
+        ], else_=0)) /
+     cast(func.sum(census.columns.pop2000), Float) * 100).label('percent_female')
+])
+
+# Group By state
+stmt = stmt.group_by(census.columns.state)
+
+# Execute the query and store the results: results
+results = connection.execute(stmt).fetchall()
+
+# Print the percentage
+for result in results:
+    print(result.state, result.percent_female)
+```
+
+
+
+
+
+
+
+
+
+
 
 
 
