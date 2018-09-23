@@ -995,7 +995,6 @@ As Jason discussed in the video, by using a where clause that selects more recor
 For your convenience, the names of the tables and columns of interest in this exercise are: state_fact (Table), notes (Column), and census_region_name (Column).
 
 ## Instructions
-* Build an update statement to update the notes column in the state_fact table to 'The Wild West'. Save it as stmt.
 * Use a where clause to filter for records that have 'West' in the census_region_name column of the state_fact table.
 * Execute stmt via the connection and save the output as results.
 * Hit 'Submit Answer' to print rowcount of the results
@@ -1005,7 +1004,6 @@ For your convenience, the names of the tables and columns of interest in this ex
 # Build a statement to update the notes to 'The Wild West': stmt
 stmt = update(state_fact).values(notes='The Wild West')
 
-# Append a where clause to match the West census region records
 stmt = stmt.where(state_fact.columns.census_region_name == 'West')
 
 # Execute the statement: results
@@ -1014,22 +1012,100 @@ results = connection.execute(stmt)
 # Print rowcount
 print(results.rowcount)
 ```
+# Correlated Updates
+You'll be using a flat_census in this exercise as the target of your correlated update. The flat_census table is a summarized copy of your census table.
 
+## Instructions
+* Build a statement to select the name column from state_fact. Save the statement as fips_stmt.
+* Append a where clause to fips_stmt that matches fips_state from the state_fact table with fips_code in the flat_census table.
+* Build an update statement to set the state_name in flat_census to fips_stmt. Save the statement as update_stmt.
+* Hit 'Submit Answer' to execute update_stmt, store the results and print the rowcount of results.
 
+```python
+# Build a statement to select name from state_fact: stmt
+fips_stmt = select([state_fact.columns.name])
 
+# Append a where clause to Match the fips_state to flat_census fips_code
+fips_stmt = fips_stmt.where(
+    state_fact.columns.fips_state == flat_census.columns.fips_code)
 
+# Build an update statement to set the name to fips_stmt: update_stmt
+update_stmt = update(flat_census).values(state_name=fips_stmt)
+# Execute update_stmt: results
+results = connection.execute(update_stmt)
 
+# Print rowcount
+print(results.rowcount)
+```
+# Deleting all the records from a table
+Often, you'll need to empty a table of all of its records so you can reload the data. You can do this with a delete statement with just the table as an argument. For example, in the video, Jason deleted the table extra_employees by executing as follows:
+delete_stmt = delete(extra_employees)
+Do be careful, though, as deleting cannot be undone!
 
+## Instructions
+* Import delete and select from sqlalchemy.
+* Build a delete statement to remove all the data from the census table. Save it as stmt.
+* Execute stmt via the connection and save the results.
+* Hit 'Submit Answer' to select all remaining rows from the census table and print the result to confirm that the table is now empty!
 
+```python
 
+# Import delete, select
+from sqlalchemy import delete, select
 
+# Build a statement to empty the census table: stmt
+stmt = delete(census)
 
+# Execute the statement: results
+results = connection.execute(stmt)
 
+# Print affected rowcount
+print(results.rowcount)
 
+# Build a statement to select all records from the census table
+stmt = select([census])
 
+# Print the results of executing the statement to verify there are no rows
+print(connection.execute(stmt).fetchall())
+```
 
+# Deleting specific records
+By using a where() clause, you can target the delete statement to remove only certain records. For example, Jason deleted all rows from the employees table that had id 3 with the following delete statement:
 
+```code
+delete(employees).where(employees.columns.id == 3
+```
+Here you'll delete ALL rows which have 'M' in the sex column and 36 in the age column. We have included code at the start which computes the total number of these rows. It is important to make sure that this is the number of rows that you actually delete.
+Build a delete statement to remove data from the census table. Save it as stmt_del.
+Append a where clause to stmt_del that contains an and_ to filter for rows which have 'M' in the sex column AND 36 in the age column.
+Execute the delete statement.
+Hit 'Submit Answer' to print the rowcount of the results, as well as to_delete, which returns the number of rows that should be deleted. These should match and this is an important sanity check!
 
+```python
+# Build a statement to count records using the sex column for Men (M) age 36: stmt
+stmt = select([func.count(census.columns.sex)]).where(
+    and_(census.columns.sex == 'M',
+         census.columns.age == 36)
+)
+
+# Execute the select statement and use the scalar() fetch method to save the record count
+to_delete = connection.execute(stmt).scalar()
+
+# Build a statement to delete records for Men (M) age 36: stmt
+stmt_del = delete(census)
+
+# Append a where clause to target man age 36
+stmt_del = stmt_del.where(
+    and_(census.columns.sex == 'M',
+         census.columns.age == 36)
+)
+
+# Execute the statement: results
+results = connection.execute(stmt_del)
+
+# Print affected rowcount and to_delete record count, make sure they match
+print(results.rowcount, to_delete)
+```
 
 
 
