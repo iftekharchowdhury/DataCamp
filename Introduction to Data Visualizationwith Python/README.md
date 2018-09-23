@@ -208,23 +208,117 @@ plt.show()
 
 # Save the figure as 'axis_limits.png'
 plt.savefig('axis_limits.png')
+```
+# Using legend()
+Legends are useful for distinguishing between multiple datasets displayed on common axes. The relevant data are created using specific line colors or markers in various plot commands. Using the keyword argument label in the plotting function associates a string to use in a legend. 
+For example, here, you will plot enrollment of women in the Physical Sciences and in Computer Science over time. You can label each curve by passing a label argument to the plotting call, and request a legend using plt.legend(). Specifying the keyword argument loc determines where the legend will be placed.
+
+## Instructions
+* Modify the plot command provided that draws the enrollment of women in Computer Science over time so that the curve is labelled 'Computer Science' in the legend.
+* Modify the plot command provided that draws the enrollment of women in the Physical Sciences over time so that the curve is labelled 'Physical Sciences' in the legend.
+* Add a legend at the lower center (i.e., loc='lower center').
+
+```python
+
+# Specify the label 'Computer Science'
+plt.plot(year, computer_science, color='red', label='Computer Science') 
+
+# Specify the label 'Physical Sciences' 
+plt.plot(year, physical_sciences, color='blue', label='Physical Sciences')
+
+# Add a legend at the lower center
+plt.legend(loc='lower center')
+# Add axis labels and title
+plt.xlabel('Year')
+plt.ylabel('Enrollment (%)')
+plt.title('Undergraduate enrollment of women')
+plt.show()
+```
+# Using annotate()
+It is often useful to annotate a simple plot to provide context. This makes the plot more readable and can highlight specific aspects of the data. Annotations like text and arrows can be used to emphasize specific observations.
+Here, you will once again plot enrollment of women in the Physical Sciences and Computer science over time. The legend is set up as before. Additionally, you will mark the inflection point when enrollment of women in Computer Science reached a peak and started declining using plt.annotate(). 
+To enable an arrow, set arrowprops=dict(facecolor='black'). The arrow will point to the location given by xy and the text will appear at the location given by xytext.
+
+
+## instructions
+* Compute the maximum enrollment of women in Computer Science using the .max() method.
+* Calculate the year in which there was maximum enrollment of women in Computer Science using the .argmax() method.
+* Annotate the plot with an arrow at the point of peak women enrolling in Computer Science.
+* Label the arrow 'Maximum'. The parameter for this is s, but you don't have to specify it.
+* Pass in the arguments to xy and xytext as tuples.
+* For xy, use the yr_max and cs_max that you computed.
+* For xytext, use (yr_max+5, cs_max+5) to specify the displacement of the label from the tip of the arrow.
+* Draw the arrow by specifying the keyword argument arrowprops=dict(facecolor='black'). The single letter shortcut for 'black' is 'k'.
+
+```python
+
+# Plot with legend as before
+plt.plot(year, computer_science, color='red', label='Computer Science') 
+plt.plot(year, physical_sciences, color='blue', label='Physical Sciences')
+plt.legend(loc='lower right')
+
+# Compute the maximum enrollment of women in Computer Science: cs_max
+cs_max = computer_science.max()
+
+# Calculate the year in which there was maximum enrollment of women in Computer Science: yr_max
+yr_max = year[computer_science.argmax()]
+
+# Add a black arrow annotation
+plt.annotate('Maximum', xy=(yr_max, cs_max), xytext=(yr_max+5, cs_max+5), arrowprops=dict(facecolor='black'))
+
+# Add axis labels and title
+plt.xlabel('Year')
+plt.ylabel('Enrollment (%)')
+plt.title('Undergraduate enrollment of women')
+plt.show()
 
 ```
+# Modifying styles
+Matplotlib comes with a number of different stylesheets to customize the overall look of different plots. To activate a particular stylesheet you can simply call plt.style.use() with the name of the style sheet you want. To list all the available style sheets you can execute: print(plt.style.available).
 
+## instructions
+* Import matplotlib.pyplot as its usual alias.
+* Activate the 'ggplot' style sheet with plt.style.use().
 
+```python
 
+# Import matplotlib.pyplot
+import matplotlib.pyplot as plt
 
+# Set the style to 'ggplot'
+plt.style.use('ggplot')
 
+# Create a figure with 2x2 subplot layout
+plt.subplot(2, 2, 1) 
 
+# Plot the enrollment % of women in the Physical Sciences
+plt.plot(year, physical_sciences, color='blue')
+plt.title('Physical Sciences')
 
+# Plot the enrollment % of women in Computer Science
+plt.subplot(2, 2, 2)
+plt.plot(year, computer_science, color='red')
+plt.title('Computer Science')
 
+# Add annotation
+cs_max = computer_science.max()
+yr_max = year[computer_science.argmax()]
+plt.annotate('Maximum', xy=(yr_max, cs_max), xytext=(yr_max-1, cs_max-10), arrowprops=dict(facecolor='black'))
 
+# Plot the enrollmment % of women in Health professions
+plt.subplot(2, 2, 3)
+plt.plot(year, health, color='green')
+plt.title('Health Professions')
 
+# Plot the enrollment % of women in Education
+plt.subplot(2, 2, 4)
+plt.plot(year, education, color='yellow')
+plt.title('Education')
 
-
-
-
-
+# Improve spacing between subplots and display them
+plt.tight_layout()
+plt.show()
+```
 
 
 
